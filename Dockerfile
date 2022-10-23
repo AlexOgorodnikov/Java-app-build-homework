@@ -1,6 +1,6 @@
 FROM jamesdbloom/docker-java6-maven
 WORKDIR /home/app
-RUN git clone https://github.com/boxfuse/boxfuse-sample-java-war-hello.git /home/app
+RUN git clone https://github.com/AlexOgorodnikov/Java-app.git /home/app
 RUN mvn package
 
 #moving war file
