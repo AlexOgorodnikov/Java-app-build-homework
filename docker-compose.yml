@@ -4,8 +4,8 @@ services:
     maven:
       build: .
       volumes:
-        - mavendata:/home/app/target/
-    tomcat: 
+        - mavendata:/home/app/App42PaaS-Java-MySQL-Sample/target
+    tomcat:
       image: tomcat:9.0.8-jre8-alpine
       ports:
         - "8080:8080"
