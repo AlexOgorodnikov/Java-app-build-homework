@@ -1,0 +1,84 @@
+[INFO] Packaging webapp
+[INFO] Assembling webapp [App42PaaS-Java-MySQL-Sample] in [/home/app/OldJavaApp/target/App42PaaS-Java-MySQL-Sample-0.0.1-SNAPSHOT]
+[INFO] Processing war project
+[INFO] Copying webapp resources [/home/app/OldJavaApp/WebContent]
+[INFO] Webapp assembled in [42 msecs]
+[INFO] Building war: /home/app/OldJavaApp/target/App42PaaS-Java-MySQL-Sample-0.0.1-SNAPSHOT.war
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  19.579 s
+[INFO] Finished at: 2022-10-25T14:30:45+03:00
+[INFO] ------------------------------------------------------------------------
+Removing intermediate container 182876d67e69
+ ---> 6772450531e3
+Step 8/11 : FROM mongo:latest
+latest: Pulling from library/mongo
+fb0b3276a519: Pull complete 
+c81bcd64a2d2: Pull complete 
+45ed91f63dfa: Pull complete 
+06d1770a2c11: Pull complete 
+a03d917eab2f: Pull complete 
+d0226311fde3: Pull complete 
+cf22b9bccca1: Pull complete 
+5a4955b612fd: Pull complete 
+bc8341d9c8d5: Pull complete 
+Digest: sha256:946d309038b2581d8913213333eb3f86142d95e770ec6a3e334ca9b43ebd402e
+Status: Downloaded newer image for mongo:latest
+ ---> 1cca5cf68239
+Step 9/11 : FROM tomcat:9.0.8-jre8-alpine
+9.0.8-jre8-alpine: Pulling from library/tomcat
+ff3a5c916c92: Pull complete 
+a8906544047d: Pull complete 
+590b87a38029: Pull complete 
+844a026fab6d: Pull complete 
+11818b451ba0: Pull complete 
+6a1b6c87412e: Pull complete 
+Digest: sha256:c9d8c2e06404f97b9dff7c4b80f9a41392fb73398d44051bca54878fdc2293eb
+Status: Downloaded newer image for tomcat:9.0.8-jre8-alpine
+ ---> 9091c18fc646
+Step 10/11 : WORKDIR /usr/local/tomcat/webapps/
+ ---> Running in a0f1bf798e82
+Removing intermediate container a0f1bf798e82
+ ---> 7f16dfb234aa
+Step 11/11 : RUN cp /home/app/OldJavaApp/target/*.war /usr/local/tomcat/webapps/
+ ---> Running in bf27e010d4ee
+cp: can't stat '/home/app/OldJavaApp/target/*.war': No such file or directory
+The command '/bin/sh -c cp /home/app/OldJavaApp/target/*.war /usr/local/tomcat/webapps/' returned a non-zero code: 1
+ERROR: Service 'maven' failed to build : Build failed
+root@homeserver:~/docker/Java-app-build-homework# nano Dockerfile 
+root@homeserver:~/docker/Java-app-build-homework# docker-compose up -d
+Building maven
+Sending build context to Docker daemon  7.093MB
+Step 1/11 : FROM alexogorodnikov/mydockerrepo:builder
+ ---> da26e537c51f
+Step 2/11 : ENV TZ=Europe/Moscow
+ ---> Using cache
+ ---> 3b6a7931557e
+Step 3/11 : RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+ ---> Using cache
+ ---> 57bd09247116
+Step 4/11 : WORKDIR /home/app
+ ---> Using cache
+ ---> 44c499097e65
+Step 5/11 : RUN git clone https://github.com/AlexOgorodnikov/OldJavaApp.git
+ ---> Using cache
+ ---> 8ccc5bde9aaa
+Step 6/11 : WORKDIR /home/app/OldJavaApp
+ ---> Using cache
+ ---> c6f60c6c5c2f
+Step 7/11 : RUN mvn package
+ ---> Using cache
+ ---> 6772450531e3
+Step 8/11 : FROM mongo:latest
+ ---> 1cca5cf68239
+Step 9/11 : FROM tomcat:9.0.8-jre8-alpine
+ ---> 9091c18fc646
+Step 10/11 : WORKDIR /usr/local/tomcat/webapps/
+ ---> Using cache
+ ---> 7f16dfb234aa
+Step 11/11 : RUN cp /home/app/OldJavaApp/target/App42PaaS-Java-MySQL-Sample-0.0.1-SNAPSHOT.war /usr/local/tomcat/webapps/
+ ---> Running in c39d3dbb534e
+cp: can't stat '/home/app/OldJavaApp/target/App42PaaS-Java-MySQL-Sample-0.0.1-SNAPSHOT.war': No such file or directory
+The command '/bin/sh -c cp /home/app/OldJavaApp/target/App42PaaS-Java-MySQL-Sample-0.0.1-SNAPSHOT.war /usr/local/tomcat/webapps/' returned a non-zero code: 1
+ERROR: Service 'maven' failed to build : Build failed
