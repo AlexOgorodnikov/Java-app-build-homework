@@ -17,7 +17,8 @@ services:
       restart: always
 
     tomcat:
-      image: tomcat:9.0.8-jre8-alpine
+      build: .
+      container_name: tom
       ports:
         - "8080:8080"
       volumes:
