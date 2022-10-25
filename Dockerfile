@@ -1,20 +1,17 @@
-  GNU nano 6.2                                                     Dockerfile                                                              
 FROM alexogorodnikov/mydockerrepo:builder
 
+ENV TZ=Europe/Moscow
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
 WORKDIR /home/app
-RUN git clone https://github.com/shephertz/App42PaaS-Java-MySQL-Sample.git
+RUN git clone https://github.com/AlexOgorodnikov/OldJavaApp.git
 
-WORKDIR /home/app/App42PaaS-Java-MySQL-Sample/WebContent/
-RUN echo -e"\
- app42.paas.db.username = dbuser\n \
- app42.paas.db.port = 5432\n \
- app42.paas.db.password = 123456\n \
- app42.paas.db.ip = loclhost\n \
- app42.paas.db.name = db\n \
-" > Config.properties
-
-WORKDIR /home/app/App42PaaS-Java-MySQL-Sample
+WORKDIR /home/app/OldJavaApp
 RUN mvn package
 
+FROM mongo:latest
+
+FROM tomcat:9.0.8-jre8-alpine
+
 WORKDIR /usr/local/tomcat/webapps/
-RUN cp /home/app/App42PaaS-Java-MySQL-Sample/target/App42PaaS-Java-MySQL-Sample-0.0.1-SNAPSHOT.war /usr/local/tomcat/webapps/
+RUN cp /home/app/OldJavaApp/target/App42PaaS-Java-MySQL-Sample-0.0.1-SNAPSHOT.war /usr/local/tomcat/webapps/
